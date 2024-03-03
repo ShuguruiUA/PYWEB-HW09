@@ -2,6 +2,6 @@
 
 ## Use main_scrapy.py to get data from https://quotes.toscrape.com/
 
-## Use models.py to create a templates for MongoDB collections
+## Use seeds.py to filled data in MongoDB collections refer to models.py
 
-## Use seeds.py to filled data in MongoDB collections
+## Using models.py to create a data structure templates for MongoDB collections
