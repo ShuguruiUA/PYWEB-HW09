@@ -6,8 +6,19 @@ from itemadapter import ItemAdapter
 import os
 import json
 import logging
+import warnings
 
-logging.basicConfig(level=logging.INFO)
+warnings.filterwarnings("ignore", category=scrapy.exceptions.ScrapyDeprecationWarning)
+logging.getLogger('scrapy').propagate = False
+
+RED = "\033[91m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+BLUE = "\033[94m"
+RESET = "\033[0m"
+
+quotes_file = 'quotes.json'
+authors_file = 'authors.json'
 
 
 class Quote(Item):
@@ -35,9 +46,9 @@ class DataPipeline:
             self.quotes.append(dict(adapter))
 
     def close_spider(self, spider):
-        with open("quotes.json", "w", encoding="utf-8") as fh:
+        with open(quotes_file, "w", encoding="utf-8") as fh:
             json.dump(self.quotes, fh, ensure_ascii=False, indent=2)
-        with open("authors.json", "w", encoding="utf-8") as fh:
+        with open(authors_file, "w", encoding="utf-8") as fh:
             json.dump(self.authors, fh, ensure_ascii=False, indent=2)
 
 
@@ -82,11 +93,13 @@ if __name__ == '__main__':
     process.crawl(QuotesSpider)
     process.start()
 
-    if os.path.getsize("quotes.json") > 3000:
-        logging.info(f"'quotes.json' Has been successfully filled and has size {os.path.getsize('quotes.json')}")
+    if os.path.getsize(quotes_file) > 3000:
+        print(f"{GREEN}File: {BLUE}'{quotes_file}'{GREEN} Has been successfully filled and has size "
+              f"{YELLOW}{os.path.getsize('quotes.json')}{GREEN} bytes {RESET}")
     else:
-        logging.info(f"Data wasn't writing to the 'quotes.json'")
-    if os.path.getsize("authors.json") > 3000:
-        logging.info(f"'authors.json' Has been successfully filled and has size {os.path.getsize('authors.json')}")
+        print(f"{RED}Data wasn't writing to the file: {YELLOW}'{quotes_file}'{RESET}")
+    if os.path.getsize(authors_file) > 3000:
+        print(f"{GREEN}File: {BLUE}'{authors_file}'{GREEN} Has been successfully filled and has size "
+              f"{YELLOW}{os.path.getsize('authors.json')}{GREEN} bytes{RESET}")
     else:
-        logging.info(f"Data wasn't writing to the 'authors.json'")
+        print(f"{RED}Data wasn't writing to the file: {YELLOW}'{authors_file}'{RESET}")
