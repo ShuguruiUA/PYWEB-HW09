@@ -2,6 +2,7 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.item import Item, Field
 from itemadapter import ItemAdapter
+from scrapy.exceptions import ScrapyDeprecationWarning
 
 import os
 import json
