@@ -1,7 +1,7 @@
 # Scrapy
 
-## Using scrapy to get data from https://quotes.toscrape.com/
+## Use main_scrapy.py to get data from https://quotes.toscrape.com/
 
-## Using models to create a templates for mongo db collections
+## Use models.py to create a templates for MongoDB collections
 
-## Using seeds to filled data in collections
+## Use seeds.py to filled data in MongoDB collections
